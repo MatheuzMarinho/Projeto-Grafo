@@ -15,6 +15,15 @@ public class DadosGrafos {
 
     public static DadosGrafos instance;
     int quantidadeVertice;
+    int grafo[][];
+
+    public int[][] getGrafo() {
+        return grafo;
+    }
+
+    public void setGrafo(int[][] grafo) {
+        this.grafo = grafo;
+    }
 
     public DadosGrafos() {
     }

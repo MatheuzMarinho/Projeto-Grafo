@@ -5,7 +5,6 @@
  */
 package grafos;
 
-import static grafos.DadosGrafos.instance;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -26,39 +25,34 @@ public class BuscaLargura {
         return instance;
     }
     
-     boolean bfs(int rGraph[][], int s, int t, int parent[])
+     boolean existeCaminho(int[][] redeResidual, int verticeInicial, int verticeFinal, int[] caminhoVertice)
     {
-        // Create a visited array and mark all vertices as not
-        // visited
-        boolean visited[] = new boolean[DadosGrafos.getInstance().quantidadeVertice];
+   
+        boolean[] visitados = new boolean[DadosGrafos.getInstance().quantidadeVertice];
         for(int i=0; i < DadosGrafos.getInstance().quantidadeVertice; ++i)
-            visited[i]=false;
+            visitados[i]=false;
  
-        // Create a queue, enqueue source vertex and mark
-        // source vertex as visited
-        LinkedList<Integer> queue = new LinkedList<Integer>();
-        queue.add(s);
-        visited[s] = true;
-        parent[s]=-1;
- 
-        // Standard BFS Loop
-        while (!queue.isEmpty())
+        LinkedList<Integer> fila = new LinkedList<Integer>();
+        fila.add(verticeInicial);
+        visitados[verticeInicial] = true;
+        caminhoVertice[verticeInicial]=-1;
+
+        while (!fila.isEmpty())
         {
-            int u = queue.poll();
+            int vertice = fila.poll();
  
             for (int v=0; v < DadosGrafos.getInstance().quantidadeVertice; v++)
             {
-                if (visited[v]==false && rGraph[u][v] > 0)
+                if (visitados[v]==false && redeResidual[vertice][v] > 0)
                 {
-                    queue.add(v);
-                    parent[v] = u;
-                    visited[v] = true;
+                    fila.add(v);
+                    caminhoVertice[v] = vertice;
+                    visitados[v] = true;
                 }
             }
         }
  
-        // If we reached sink in BFS starting from source, then
-        // return true, else false
-        return (visited[t] == true);
+        return (visitados[verticeFinal] == true);
     }
+     
 }

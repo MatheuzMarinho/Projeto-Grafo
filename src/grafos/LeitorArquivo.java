@@ -18,7 +18,6 @@ import java.util.Scanner;
  */
 public class LeitorArquivo {
 
- 
     public static int[][] lerArquivo() {
         Scanner ler = new Scanner(System.in);
         int qtdVertice = 0;
@@ -26,12 +25,11 @@ public class LeitorArquivo {
         int linhaGrafo = 0;
         int colunaGrafo = 0;
         int flag = 0;
-        int[][] grafoFinal = new int [20][20] ;
-   
+        int[][] grafoFinal = new int[20][20];
+
         System.out.printf("Informe o nome de arquivo texto:\n");
         String nome = ler.nextLine();
 
-        System.out.printf("\nConteúdo do arquivo texto:\n");
         try {
             FileInputStream entrada = new FileInputStream(nome);
             InputStreamReader arq = new InputStreamReader(entrada);
@@ -47,12 +45,12 @@ public class LeitorArquivo {
                     linhaGrafo = qtdLinha - 1;
                     int count = 0;
                     for (String s : arrayValores) {
-                           if (count != 0) {
+                        if (count != 0) {
                             if (flag == 1) {
                                 grafoFinal[linhaGrafo][colunaGrafo] = Integer.parseInt(s);
                                 flag = 2; // pegar fluxo
                             } else if (flag == 2) {
-                               // grafoFinal[colunaGrafo][linhaGrafo] = Integer.parseInt(s);
+                                // grafoFinal[colunaGrafo][linhaGrafo] = Integer.parseInt(s);
                                 flag = 0; // pegar coluna
                             } else if (flag == 0) {
                                 for (char c : s.toCharArray()) {
@@ -74,19 +72,11 @@ public class LeitorArquivo {
                         count++;
                     }
                 }
-                System.out.printf("%s\n", linha);
                 qtdLinha++;
-                linha = lerArq.readLine(); // lê da segunda até a última linha
+                linha = lerArq.readLine();
 
             }
-            for (int i = 0; i < DadosGrafos.getInstance().quantidadeVertice; i++) {
-                for (int j = 0; j < DadosGrafos.getInstance().quantidadeVertice; j++) {
-                    System.out.printf("%d", grafoFinal[i][j]);
-                   
-                }
-                System.out.printf("\n");
-            }
-            System.out.printf("%d", qtdVertice);
+            DadosGrafos.getInstance().setGrafo(grafoFinal);
             arq.close();
         } catch (IOException e) {
             System.err.printf("Erro na abertura do arquivo: %s.\n",
@@ -98,7 +88,6 @@ public class LeitorArquivo {
     }
 
     public static int posicaoColuna(String coluna) {
-        System.out.printf("Posição Coluna");
         String valorFinal = "";
         for (char c : coluna.toCharArray()) {
             if (Character.isDigit(c)) {
